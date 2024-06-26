@@ -1,4 +1,4 @@
-package home.test_springboot;
+package home.spring_demo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
 @RestController
-public class TestSpringbootApplication {
+public class SpringDemoApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(TestSpringbootApplication.class, args);
+        SpringApplication.run(SpringDemoApplication.class, args);
     }
 
     @GetMapping
