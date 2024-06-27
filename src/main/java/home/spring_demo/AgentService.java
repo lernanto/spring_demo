@@ -1,10 +1,12 @@
 package home.spring_demo;
 
+import java.util.NoSuchElementException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class LBSService {
+public class AgentService {
 
     @Autowired
     private AgentRepository agentRepository;
@@ -18,12 +20,13 @@ public class LBSService {
     }
 
     public Agent updateAgent(String id, final Location location) {
-        Agent agent = agentRepository.findById(id).get();
-        if (agent == null) {
-            agent = new Agent(id, location.getLatitude(), location.getLongitude());
-        } else {
+        Agent agent = null;
+        try {
+            agent = agentRepository.findById(id).get();
             agent.setLatitude((agent.getLatitude() + location.getLatitude()) / 2);
             agent.setLongitude((agent.getLongitude() + location.getLongitude()) / 2);
+        } catch (NoSuchElementException e) {
+            agent = new Agent(id, location.getLatitude(), location.getLongitude());
         }
 
         agentRepository.save(agent);

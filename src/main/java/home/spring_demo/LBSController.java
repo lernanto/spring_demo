@@ -1,6 +1,5 @@
 package home.spring_demo;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,32 +11,31 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class LBSController {
+public class LbsController {
 
     @Autowired
-    private LBSService service;
+    private AgentService agentService;
+
+    @Autowired
+    private SearchService searchService;
 
     @GetMapping("agent/{id}")
     public Location getLocation(@PathVariable String id) {
-        Agent agent = service.getAgent(id);
-        return new Location(agent.getLatitude(), agent.getLongitude());
+        return agentService.getAgent(id);
     }
 
     @PutMapping("agent/{id}")
     public void setLocation(@PathVariable String id, @RequestBody Location location) {
-        Agent agent = new Agent(id, location.getLatitude(), location.getLongitude());
-        service.setAgent(agent);
+        agentService.setAgent(new Agent(id, location.getLatitude(), location.getLongitude()));
     }
 
     @PostMapping("agent/{id}")
     public Agent updateLocation(@PathVariable String id, @RequestBody Location location) {
-        return service.updateAgent(id, location);
+        return agentService.updateAgent(id, location);
     }
 
-    @GetMapping("search/{latitude}/{longitude}")
-    public List<Agent> searchAgents(@PathVariable double latitude, @PathVariable double longitude) {
-        List<Agent> agents = new ArrayList<>();
-        agents.add(new Agent());
-        return agents;
+    @GetMapping("search/{latitude}/{longitude}/{radius}")
+    public List<Agent> searchAgents(@PathVariable double latitude, @PathVariable double longitude, @PathVariable double radius) {
+        return searchService.searchAgents(new Location(latitude, longitude), radius);
     }
 }

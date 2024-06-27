@@ -1,24 +1,17 @@
 package home.spring_demo;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.io.Serializable;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
-import lombok.AllArgsConstructor;
-
-@Builder
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@RedisHash("Agent")
-public class Agent implements Serializable {
+@RedisHash("agent")
+public class Agent extends Location implements Serializable {
     @Id
     private String id;
-    private double latitude;
-    private double longitude;
+
+    Agent(String id, double latitude, double longitude) {
+        super(latitude, longitude);
+        this.id = id;
+    }
 }
