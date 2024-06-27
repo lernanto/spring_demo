@@ -30,13 +30,13 @@ public class LBSController {
     }
 
     @PostMapping("agent/{id}")
-    public void updateLocation(@PathVariable String id, @RequestBody Location location) {
-
+    public Agent updateLocation(@PathVariable String id, @RequestBody Location location) {
+        return service.updateAgent(id, location);
     }
 
     @GetMapping("search/{latitude}/{longitude}")
     public List<Agent> searchAgents(@PathVariable double latitude, @PathVariable double longitude) {
-        List<Agent> agents = new ArrayList<Agent>();
+        List<Agent> agents = new ArrayList<>();
         agents.add(new Agent());
         return agents;
     }
